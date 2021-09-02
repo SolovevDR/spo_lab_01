@@ -64,17 +64,17 @@ int main()
     printf("\n      %s", buffer2);
 
     do {
-        printf("\n      %s", buffer2);
+        printf("\n%s", buffer2);
         GetVolumePathNamesForVolumeNameA(buffer2, buffer3, CBufLen, &CBufLen);
         char* path = buffer3;
         printf("\npath: %s", path);
-        GetDiskFreeSpaceExA(buffer3, (PULARGE_INTEGER)&available, (PULARGE_INTEGER)&total, (PULARGE_INTEGER)&free);
-        printf("\nsize: %u  bytes ", total);
-        printf("\nFree space: %u  bytes\n", available);
+        GetDiskFreeSpaceExA(buffer2, (PULARGE_INTEGER)&available, (PULARGE_INTEGER)&total, (PULARGE_INTEGER)&free);
+        printf("\nsize: %I64d  bytes ", total);
+        printf("\nFree space: %I64d  bytes\n", available);
 
 
 
-    } while (FindNextVolumeA(firstVolume, buffer2, size2));
+    } while (FindNextVolumeA(firstVolume, buffer2, BUFSIZE));
     FindVolumeClose(firstVolume);
 
 }
