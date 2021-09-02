@@ -56,18 +56,19 @@ int main()
     //пункт 1.4
     char buffer2[MAX_PATH + 1];
     DWORD size2 = MAX_PATH;
-    char timeBuffer[MAX_PATH + 1];
+    char buffer3[MAX_PATH + 1];
     DWORD  CBufLen = MAX_PATH;
     __int64 total, available, free;
 
     HANDLE firstVolume =  FindFirstVolumeA(buffer2, size2);
+    printf("\n      %s", buffer2);
 
     do {
         printf("\n      %s", buffer2);
-        GetVolumePathNamesForVolumeNameA(buffer2, timeBuffer, CBufLen, &CBufLen);
-        char* path = timeBuffer;
+        GetVolumePathNamesForVolumeNameA(buffer2, buffer3, CBufLen, &CBufLen);
+        char* path = buffer3;
         printf("\npath: %s", path);
-        GetDiskFreeSpaceExA(buffer, (PULARGE_INTEGER)&available, (PULARGE_INTEGER)&total, (PULARGE_INTEGER)&free);
+        GetDiskFreeSpaceExA(buffer3, (PULARGE_INTEGER)&available, (PULARGE_INTEGER)&total, (PULARGE_INTEGER)&free);
         printf("\nsize: %u  bytes ", total);
         printf("\nFree space: %u  bytes\n", available);
 
