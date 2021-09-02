@@ -16,6 +16,7 @@ using namespace std;
 
 int main()
 {
+    //пункт 1.1 
     DWORD dwVersion = 0;
     DWORD dwMajorVersion = 0;
     DWORD dwMinorVersion = 0;
@@ -38,11 +39,12 @@ int main()
         dwMinorVersion,
         dwBuild);
 
-   
+    //пункт 1.2 
     TCHAR szPath[_MAX_PATH] = { 0 };
     UINT iRet = GetSystemDirectory(szPath, _MAX_PATH);
     printf("Result function GetSystemDirectory %d\n", iRet);
     
+    //пункт 1.3 
     char buffer[256];
     DWORD size = 256;
     GetComputerNameA(buffer, &size);
@@ -51,6 +53,7 @@ int main()
     GetUserNameA(buffer, &size);
     printf("%s\n", buffer);
 
+    //пункт 1.4
     char buffer2[MAX_PATH + 1];
     DWORD size2 = MAX_PATH;
     char timeBuffer[MAX_PATH + 1];
