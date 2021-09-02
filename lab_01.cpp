@@ -14,6 +14,32 @@ using namespace std;
 
 #define INFO_BUFFER_SIZE 32767
 
+//2. Измерение производительности ЦП
+//Замер рабочей частоты f 
+double PCFreq = 0.0;
+__int64 CounterStart = 0;
+
+void StartCounter()
+{
+    LARGE_INTEGER li;
+    if (!QueryPerformanceFrequency(&li))
+        cout << "Function QueryPerformanceFrequency() failed!\n";
+
+    PCFreq = double(li.QuadPart);
+
+    printf("\n2.1.  CPU frequency: %u  Hz\n", li);
+    QueryPerformanceCounter(&li);
+    CounterStart = li.QuadPart;
+}
+
+//Подсчет кол-ва тактов ЦП, которе занимает исполнение предыдущего пункта
+double GetCounter()
+{
+    LARGE_INTEGER li;
+    QueryPerformanceCounter(&li);
+    return double((li.QuadPart - CounterStart) * 1000000) / PCFreq;
+}
+
 int main()
 {
     //пункт 1.1 
@@ -65,6 +91,7 @@ int main()
 
     do {
         printf("\n%s", buffer2);
+        CBufLen = MAX_PATH;
         GetVolumePathNamesForVolumeNameA(buffer2, buffer3, CBufLen, &CBufLen);
         char* path = buffer3;
         printf("\npath: %s", path);
@@ -76,6 +103,46 @@ int main()
 
     } while (FindNextVolumeA(firstVolume, buffer2, BUFSIZE));
     FindVolumeClose(firstVolume);
+
+    
+    /*
+    //пункт 1.5
+    DWORD dwSize;
+    TCHAR szName[MAX_KEY_LENGTH];
+    HKEY hKey;
+    DWORD dwIndex = 0;
+    DWORD retCode;
+    DWORD BufferSize = 8192;
+    PPERF_DATA_BLOCK PerfData = (PPERF_DATA_BLOCK)malloc(BufferSize);
+    DWORD cbData = BufferSize;
+
+    if (RegOpenKeyExA(HKEY_CURRENT_USER, "Software\\Microsoft\\Windows\\CurrentVersion\\Run",
+        0, KEY_ALL_ACCESS, &hKey) == !ERROR_SUCCESS)
+    {
+        printf("Function RegOpenKeyEx() failed!\n");
+    }
+    else printf("\nStartup commands:\n");
+
+    while (1) {
+        dwSize = sizeof(szName);
+        retCode = RegEnumValue(hKey, dwIndex, szName, &dwSize, NULL, NULL, NULL, NULL);
+
+        if (retCode == ERROR_SUCCESS)
+        {
+            RegQueryValueEx(hKey, szName, NULL, NULL, (LPBYTE)PerfData, &cbData);
+            printf("      %d: %s:  %s\n", dwIndex + 1, szName, PerfData);
+            dwIndex++;
+        }
+        else break;
+    }
+    */
+
+    //RegCloseKey(hKey);
+
+    StartCounter();
+    cout << "2.2.  CPU clock count: " << GetCounter() << "  us \n";
+    return 0;
+
 
 }
 
