@@ -27,7 +27,7 @@ void StartCounter()
 
     PCFreq = double(li.QuadPart);
 
-    printf("\n2.1.  CPU frequency: %u  Hz\n", li);
+    printf("\n CPU frequency: %u  Hz\n", li);
     QueryPerformanceCounter(&li);
     CounterStart = li.QuadPart;
 }
@@ -74,10 +74,10 @@ int main()
     char buffer[256];
     DWORD size = 256;
     GetComputerNameA(buffer, &size);
-    printf("%s\n", buffer);
+    printf("Computer name is : %s\n", buffer);
 
     GetUserNameA(buffer, &size);
-    printf("%s\n", buffer);
+    printf("User name is : %s\n", buffer);
 
     //пункт 1.4
     char buffer2[MAX_PATH + 1];
@@ -140,7 +140,7 @@ int main()
     //RegCloseKey(hKey);
 
     StartCounter();
-    cout << "2.2.  CPU clock count: " << GetCounter() << "  us \n";
+    cout << "CPU clock count: " << GetCounter() << "  us \n";
     return 0;
 
 
