@@ -105,7 +105,7 @@ int main()
     FindVolumeClose(firstVolume);
 
     
-    /*
+    
     //пункт 1.5
     DWORD dwSize;
     TCHAR szName[MAX_KEY_LENGTH];
@@ -129,14 +129,14 @@ int main()
 
         if (retCode == ERROR_SUCCESS)
         {
-            RegQueryValueEx(hKey, szName, NULL, NULL, (LPBYTE)PerfData, &cbData);
+            RegQueryValueExA(hKey, (LPCSTR)&szName, NULL, NULL, (LPBYTE)PerfData, &cbData);
             printf("      %d: %s:  %s\n", dwIndex + 1, szName, PerfData);
             dwIndex++;
         }
         else break;
     }
-    */
 
+    
     //RegCloseKey(hKey);
 
     StartCounter();
